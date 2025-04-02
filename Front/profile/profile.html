@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <link rel="stylesheet" href="profile.css">
+    <!-- Add SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Add SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="profile.js" type="module" defer></script>
 </head>
 <body>
@@ -15,6 +19,10 @@
             <p><strong>Email</strong>: <span id="userEmail">Loading...</span></p>
             <p><strong>Rank</strong>: <span id="userRank">Loading...</span></p>
             <p><strong>Highscore</strong>: <span id="userHighscore">Loading...</span></p>
+        </div>
+
+        <div class="level-scores" id="levelScores">
+            <!-- Level scores will be populated here -->
         </div>
 
         <div class="profile-actions">

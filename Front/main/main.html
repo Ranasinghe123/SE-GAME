@@ -5,15 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
     <link rel="stylesheet" href="main.css">
+    <!-- Add SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Add SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="container">
         <h1>LETTER TWIST</h1>
         <p id="user-info"></p>
-        <button onclick="startGame()">Play</button>
-        <button onclick="openProfile()">Profile</button>
-        <button onclick="openLeaderboard()">Leaderboard</button>
-        <button id="logout-btn" onclick="logout()" style="display: none;">Logout</button>
+        
+        <div class="button-wrapper">
+            <button onclick="startGame()">Play</button>
+        </div>
+        
+        <div class="button-wrapper">
+            <button onclick="openProfile()">Profile</button>
+        </div>
+        
+        <div class="button-wrapper">
+            <button onclick="openLeaderboard()">Leaderboard</button>
+        </div>
+        
+        <div class="button-wrapper">
+            <button id="logout-btn" onclick="logout()" style="display: none;">Logout</button>
+        </div>
     </div>
     <script src="main.js"></script>
 </body>

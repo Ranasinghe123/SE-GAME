@@ -18,12 +18,20 @@ body {
 
 .container {
     text-align: center;
+    padding: 20px;
 }
 
 h1 {
-    font-size: 32px;
+    font-size: 48px;
     font-weight: bold;
     margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#user-info {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: bold;
 }
 
 button {
@@ -39,8 +47,57 @@ button {
     font-weight: bold;
     border-radius: 5px;
     transition: 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 0;
 }
 
 button:hover {
     background-color: lightgray;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+    transform: translateY(-5px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Sweet Alert custom styling */
+.swal2-popup {
+    border-radius: 15px;
+    font-family: Arial, sans-serif;
+}
+
+.swal2-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.swal2-html-container {
+    font-size: 16px;
+    color: #555;
+}
+
+.swal2-confirm {
+    font-weight: bold !important;
+    border-radius: 5px !important;
+}
+
+.swal2-cancel {
+    font-weight: bold !important;
+    border-radius: 5px !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 32px;
+    }
+    
+    button {
+        width: 200px;
+        font-size: 18px;
+    }
 }

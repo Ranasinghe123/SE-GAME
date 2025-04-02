@@ -92,19 +92,37 @@ const fetchUserProfile = async (userId) => {
             const scoresContainer = document.getElementById("levelScores");
             if (scoresContainer) {
                 scoresContainer.innerHTML = ""; // Clear previous scores
-                if (userData.scores) {
+                
+                const scoreTitle = document.createElement("h2");
+                scoreTitle.textContent = "Level Scores";
+                scoreTitle.style.marginTop = "20px";
+                scoreTitle.style.marginBottom = "10px";
+                scoresContainer.appendChild(scoreTitle);
+                
+                if (userData.scores && Object.keys(userData.scores).length > 0) {
                     Object.entries(userData.scores).forEach(([level, score]) => {
                         const scoreEntry = document.createElement("div");
                         scoreEntry.textContent = `Level ${level}: ${score}`;
+                        scoreEntry.style.fontSize = "18px";
+                        scoreEntry.style.margin = "5px 0";
                         scoresContainer.appendChild(scoreEntry);
                     });
                 } else {
-                    scoresContainer.textContent = "No level scores available";
+                    const noScores = document.createElement("div");
+                    noScores.textContent = "No level scores available";
+                    noScores.style.fontSize = "18px";
+                    noScores.style.margin = "5px 0";
+                    scoresContainer.appendChild(noScores);
                 }
             }
         } else {
             console.error("User document not found");
-            alert("User profile not found!");
+            Swal.fire({
+                title: 'Error!',
+                text: 'User profile not found!',
+                icon: 'error',
+                confirmButtonColor: '#1E78B1'
+            });
         }
     } catch (error) {
         console.error("Error fetching user data:", error);
@@ -115,11 +133,13 @@ const fetchUserProfile = async (userId) => {
         safeUpdateElementText("userRank", "Error");
         safeUpdateElementText("userHighscore", "Error");
 
-        // Optional: Show error to user
-        const scoresContainer = document.getElementById("levelScores");
-        if (scoresContainer) {
-            scoresContainer.innerHTML = `<div style="color: red;">Failed to load profile: ${error.message}</div>`;
-        }
+        // Show error to user with SweetAlert2
+        Swal.fire({
+            title: 'Error!',
+            text: `Failed to load profile: ${error.message}`,
+            icon: 'error',
+            confirmButtonColor: '#1E78B1'
+        });
     }
 };
 
@@ -128,8 +148,14 @@ onAuthStateChanged(auth, (user) => {
     if (user) {
         fetchUserProfile(user.uid);
     } else {
-        alert("No user logged in!");
-        window.location.href = "login.html"; // Redirect to login page if no user is logged in
+        Swal.fire({
+            title: 'Not Logged In',
+            text: 'Please log in to view your profile',
+            icon: 'warning',
+            confirmButtonColor: '#1E78B1'
+        }).then(() => {
+            window.location.href = "../register/register.html"; // Redirect to login page if no user is logged in
+        });
     }
 });
 
@@ -142,37 +168,58 @@ window.editProfile = function () {
 window.deleteProfile = async function () {
     const user = auth.currentUser;
     if (user) {
-        const confirmDelete = confirm("Are you sure you want to delete your profile? This cannot be undone.");
-        if (confirmDelete) {
-            try {
-                // Delete Firestore document
-                await deleteDoc(doc(db, "users", user.uid));
-                
-                // Delete Authentication user
-                await deleteUser(user);
-                
-                // Sign out and clear local storage
-                await signOut(auth);
-                localStorage.clear();
-                
-                alert("Profile deleted successfully!");
-                window.location.href = "../register/register.html";
-            } catch (error) {
-                console.error("Error deleting profile:", error);
-                alert("Failed to delete profile. Please try again.");
+        // Use SweetAlert2 for confirmation
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this! All your data will be permanently deleted.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    // Show loading state
+                    Swal.fire({
+                        title: 'Deleting...',
+                        text: 'Please wait while we delete your profile',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    
+                    // Delete Firestore document
+                    await deleteDoc(doc(db, "users", user.uid));
+                    
+                    // Delete Authentication user
+                    await deleteUser(user);
+                    
+                    // Sign out and clear local storage
+                    await signOut(auth);
+                    localStorage.clear();
+                    
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your profile has been deleted successfully.',
+                        icon: 'success',
+                        confirmButtonColor: '#1E78B1'
+                    }).then(() => {
+                        window.location.href = "../register/register.html";
+                    });
+                } catch (error) {
+                    console.error("Error deleting profile:", error);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: `Failed to delete profile: ${error.message}`,
+                        icon: 'error',
+                        confirmButtonColor: '#1E78B1'
+                    });
+                }
             }
-        }
+        });
     }
 };
 
-// Logout functionality
-window.logout = async function () {
-    try {
-        await signOut(auth);
-        localStorage.clear();
-        window.location.href = "../login/login.html";
-    } catch (error) {
-        console.error("Logout error:", error);
-        alert("Failed to log out. Please try again.");
-    }
-};
