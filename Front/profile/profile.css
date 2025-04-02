@@ -2,76 +2,118 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background-color: #1E78B1; /* Blue background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* More modern font stack */
+  }
+  
+  body {
+    background: linear-gradient(135deg, #1E78B1, #155a87); /* Gradient background */
     color: white;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-}
-
-.profile-container {
-    background: transparent;
-    padding: 40px;
-    border-radius: 10px;
-}
-
-.profile-title {
+  }
+  
+  .profile-container {
+    background: rgba(255, 255, 255, 0.1); /* Subtle semi-transparent background */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    padding: 50px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    max-width: 500px;
+    width: 90%;
+    transition: all 0.3s ease;
+  }
+  
+  .profile-title {
     font-size: 36px;
     font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.profile-info p {
-    font-size: 22px;
-    margin: 10px 0;
-    font-weight: bold;
-}
-
-.profile-info span {
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+  }
+  
+  .profile-info p {
+    font-size: 20px;
+    margin: 15px 0;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .profile-info span {
     font-weight: normal;
-}
-
-.profile-actions {
-    margin-top: 30px;
+    opacity: 0.9;
+  }
+  
+  .profile-actions {
+    margin-top: 40px;
     display: flex;
     justify-content: center;
-    gap: 20px;
-}
-
-button {
-    padding: 12px 25px;
-    font-size: 18px;
+    gap: 25px;
+  }
+  
+  button {
+    padding: 12px 30px;
+    font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
+    border-radius: 50px; /* Rounded buttons */
+    font-weight: 600;
     transition: 0.3s;
-}
-
-/* Edit Button */
-.edit-btn {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* Edit Button */
+  .edit-btn {
     border: 2px solid white;
     background: transparent;
     color: white;
-}
-
-.edit-btn:hover {
-    background-color: white;
-    color: black;
-}
-
-/* Delete Button */
-.delete-btn {
+  }
+  
+  .edit-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Delete Button */
+  .delete-btn {
     background-color: white;
     color: #1E78B1;
     border: none;
-}
-
-.delete-btn:hover {
-    background-color: #d9d9d9;
-}
+  }
+  
+  .delete-btn:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .profile-container {
+      padding: 30px 20px;
+    }
+    
+    .profile-title {
+      font-size: 30px;
+    }
+    
+    .profile-info p {
+      font-size: 18px;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    .profile-actions {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    button {
+      width: 100%;
+    }
+  }

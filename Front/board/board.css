@@ -11,18 +11,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background: url('1st\ screen\ \(5\).png') no-repeat center center/cover;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #f3f0f0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgba(30, 120, 177, 0.8), rgba(21, 90, 135, 0.9)), 
+                url('1st\ screen\ \(5\).png') no-repeat center center/cover;
+    color: #ffffff;
     text-align: center;
+    padding: 20px;
 }
 
 /* Main Container */
 .container {
     width: 100%;
     max-width: 1200px;
-    margin: 0 20px;
+    margin: 0 auto;
 }
 
 /* Header Styling */
@@ -30,70 +31,126 @@ h1 {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 40px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-    color: #293df1;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+    color: white;
+    letter-spacing: 1px;
 }
 
 /* Leaderboard Container */
 .leaderboard {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     padding: 30px;
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    color: #333;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    color: white;
+    transition: all 0.3s ease;
 }
 
 /* Header Row for Leaderboard */
 .row {
     display: flex;
     justify-content: space-between;
-    background-color: #1976D2;
+    background-color: rgba(255, 255, 255, 0.2);
     color: white;
-    font-weight: bold;
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 15px 20px;
+    border-radius: 50px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Entry Row for Leaderboard */
 .entry {
     display: flex;
     justify-content: space-between;
-    background: #2196F3;
+    background: rgba(255, 255, 255, 0.15);
     color: white;
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 8px;
+    padding: 12px 20px;
+    border-radius: 50px;
+    margin-bottom: 10px;
     font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
 /* Hover Effects */
-.row:hover,
 .entry:hover {
-    background: #1565C0;
-    cursor: pointer;
-    transform: scale(1.02);
-    transition: transform 0.2s ease-in-out;
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Every other entry with a different background for better readability */
+.entry:nth-child(even) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Rank, Name, and Score styling for better alignment */
+.rank, .name, .score {
+    display: flex;
+    align-items: center;
+}
+
+.rank {
+    font-weight: bold;
+    min-width: 40px;
+}
+
+.name {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.score {
+    font-weight: bold;
+    min-width: 70px;
+    justify-content: flex-end;
+}
+
+/* Top 3 entries styling */
+.entry:nth-child(1) {
+    background: rgba(247, 210, 4, 0.87); /* Gold */
+}
+
+.entry:nth-child(2) {
+    background: rgba(93, 94, 93, 0.897); /* Silver */
+}
+
+.entry:nth-child(3) {
+    background: rgba(180, 107, 33, 0.712); /* Bronze */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
     h1 {
         font-size: 2rem;
+        margin-bottom: 30px;
     }
 
     .leaderboard {
-        width: 90%;
+        padding: 20px;
+        width: 95%;
     }
 
-    .row,
+    .row {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+    
     .entry {
-        font-size: 1rem;
+        padding: 10px 15px;
+        font-size: 0.9rem;
     }
 }

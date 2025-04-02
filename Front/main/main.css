@@ -7,13 +7,13 @@
 
 body {
     text-align: center;
-    background: url('1st\ screen\ \(4\).png') no-repeat center center/cover;
+    background: #0d72b8;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    color: white;
+    color: rgb(248, 249, 250);
 }
 
 .container {
