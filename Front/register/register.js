@@ -30,9 +30,24 @@ document.addEventListener("DOMContentLoaded", function () {
         let password = document.getElementById("password").value.trim();
 
         if (!name || !email || !password) {
-            alert("Please fill in all fields.");
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'Please fill in all fields.',
+                confirmButtonColor: '#4285f4'
+            });
             return;
         }
+
+        // Show loading state
+        Swal.fire({
+            title: 'Creating your account',
+            html: 'Please wait...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
 
         try {
             // Create user in Firebase Authentication
@@ -47,32 +62,84 @@ document.addEventListener("DOMContentLoaded", function () {
                 createdAt: new Date().toISOString()
             });
 
-            alert("Registration successful!");
-            window.location.href = "../login/login.html"; // Redirect to login page
+            // Show success message and redirect
+            Swal.fire({
+                icon: 'success',
+                title: 'Registration Successful!',
+                text: 'Your account has been created.',
+                confirmButtonColor: '#4285f4',
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = "../login/login.html"; // Redirect to login page
+            });
         } catch (error) {
             console.error("Registration Error:", error);
-            alert("Error: " + error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration Failed',
+                text: error.message,
+                confirmButtonColor: '#4285f4'
+            });
         }
     });
-// Google Registration
-document.getElementById("googleRegister").addEventListener("click", async function () {
-    try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
 
-        // Save Google user details in Firestore
-        await setDoc(doc(db, "users", user.uid), {
-            name: user.displayName,
-            email: user.email,
-            uid: user.uid,
-            createdAt: new Date().toISOString()
-        });
+    // Google Registration
+    document.getElementById("googleRegister").addEventListener("click", async function () {
+        try {
+            // Show loading state
+            Swal.fire({
+                title: 'Connecting to Google',
+                html: 'Please wait...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
 
-        alert("Google Registration successful!");
-        window.location.href = "../login/login.html"; // Redirect
-    } catch (error) {
-        console.error("Google Registration Error:", error);
-        alert("Error: " + error.message);
-    }
-});
+            // Save Google user details in Firestore
+            await setDoc(doc(db, "users", user.uid), {
+                name: user.displayName,
+                email: user.email,
+                uid: user.uid,
+                createdAt: new Date().toISOString()
+            });
+
+            // Show success message and redirect
+            Swal.fire({
+                icon: 'success',
+                title: 'Google Registration Successful!',
+                text: 'Your account has been created.',
+                confirmButtonColor: '#4285f4',
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = "../login/login.html"; // Redirect to login page
+            });
+        } catch (error) {
+            console.error("Google Registration Error:", error);
+            
+            // Check if error is from user cancelling the popup
+            if (error.code === 'auth/popup-closed-by-user') {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Sign-in Cancelled',
+                    text: 'You cancelled the Google sign-in process.',
+                    confirmButtonColor: '#4285f4'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Google Registration Failed',
+                    text: error.message,
+                    confirmButtonColor: '#4285f4'
+                });
+            }
+        }
+    });
 });
