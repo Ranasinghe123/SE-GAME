@@ -5,32 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="login.css">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Left Section (Image) -->
-        <div class="left-section">
-            <img src="../images/rr3.jpeg" >
-        </div>
+    <!-- Added wrapper div for fixed positioning -->
+    <div class="wrapper">
+        <div class="container">
+            <!-- Left Section (Image) -->
+            <div class="left-section">
+                <img src="../images/rr3.jpeg">
+            </div>
 
-        <!-- Right Section (Login Form) -->
-        <div class="right-section">
-            <h2>Login</h2>
-            <form id="loginform">
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
-            <p>or</p>
-            <button class="google-btn" onclick="googleLogin()">
-                <img src="../images/rr2.png" alt="Google"> Login with Google
-            </button>
-            <div class="register-link">
-                <p>Don't have an account? <a href="../register/register.html">Register here</a></p>
+            <!-- Right Section (Login Form) -->
+            <div class="right-section">
+                <h2>Login</h2>
+                <form id="loginform">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <p>or</p>
+                <button class="google-btn" onclick="googleLogin()">
+                    <img src="../images/rr2.png" alt="Google"> Login with Google
+                </button>
+                <div class="register-link">
+                    <p>Don't have an account? <a href="../register/register.html">Register here</a></p>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+    <!-- Custom JS -->
     <script src="login.js" type="module"></script>
 </body>
 </html>

@@ -54,9 +54,24 @@ document.addEventListener("DOMContentLoaded", function () {
             const password = document.getElementById("password").value.trim();
 
             if (!email || !password) {
-                alert("Please enter both email and password.");
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please enter both email and password.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
                 return;
             }
+
+            // Show loading indicator
+            Swal.fire({
+                title: 'Logging in...',
+                html: 'Please wait while we verify your credentials',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
 
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -72,14 +87,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("✅ User Session Info:", user);
                 console.log("✅ JWT Token from Firebase:", token);
 
-                alert(`Login successful! Welcome, ${user.email}`);
-
-                // Redirect to main.html
-                window.location.href = "../main/main.html";
+                // Close loading indicator and show success message
+                Swal.fire({
+                    title: 'Success!',
+                    text: `Welcome, ${user.email}`,
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    // Redirect to main.html
+                    window.location.href = "../main/main.html";
+                });
 
             } catch (error) {
                 console.error("❌ Login Error:", error.message);
-                alert("Error: " + error.message);
+                
+                Swal.fire({
+                    title: 'Login Failed',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'Try Again'
+                });
             }
         });
     } else {
@@ -90,6 +118,16 @@ document.addEventListener("DOMContentLoaded", function () {
 // Google Login Function
 window.googleLogin = async function () {
     try {
+        // Show loading indicator
+        Swal.fire({
+            title: 'Connecting to Google...',
+            html: 'Please wait while we connect to your Google account',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
@@ -103,14 +141,27 @@ window.googleLogin = async function () {
         console.log("✅ User Session Info:", user);
         console.log("✅ JWT Token from Firebase:", token);
 
-        alert(`Google Login successful! Welcome, ${user.displayName}`);
-
-        // Redirect to main.html
-        window.location.href = "../main/main.html";
+        // Close loading indicator and show success message
+        Swal.fire({
+            title: 'Success!',
+            text: `Welcome, ${user.displayName}`,
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+        }).then(() => {
+            // Redirect to main.html
+            window.location.href = "../main/main.html";
+        });
 
     } catch (error) {
         console.error("❌ Google Login Error:", error.message);
-        alert("Error: " + error.message);
+        
+        Swal.fire({
+            title: 'Google Login Failed',
+            text: error.message,
+            icon: 'error',
+            confirmButtonText: 'Try Again'
+        });
     }
 };
 
@@ -122,11 +173,29 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     if (!authToken && !isLoginPage) {
         console.log("❌ No valid session found. Redirecting to login page...");
-        window.location.href = "../login/login.html";
+        
+        Swal.fire({
+            title: 'Session Expired',
+            text: 'Please log in again to continue',
+            icon: 'info',
+            timer: 2000,
+            showConfirmButton: false
+        }).then(() => {
+            window.location.href = "../login/login.html";
+        });
     } else if (authToken && isLoginPage) {
         // If we're already logged in and on the login page, redirect to main
         console.log("✅ User is already authenticated. Redirecting to main page...");
-        window.location.href = "../main/main.html";
+        
+        Swal.fire({
+            title: 'Already Logged In',
+            text: 'Redirecting to the main page',
+            icon: 'info',
+            timer: 1500,
+            showConfirmButton: false
+        }).then(() => {
+            window.location.href = "../main/main.html";
+        });
     } else {
         console.log("✅ Authentication state is appropriate for current page.");
     }
@@ -134,11 +203,28 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 // Logout function
 window.logout = function () {
-    document.cookie = "authToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-    
-    console.log("✅ User logged out. JWT token cleared from cookies.");
-    
-    alert("Logged out successfully!");
-    
-    window.location.href = "../login/login.html";
+    Swal.fire({
+        title: 'Log Out?',
+        text: 'Are you sure you want to log out?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, log me out',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.cookie = "authToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+            
+            console.log("✅ User logged out. JWT token cleared from cookies.");
+            
+            Swal.fire({
+                title: 'Logged Out',
+                text: 'You have been successfully logged out',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = "../login/login.html";
+            });
+        }
+    });
 };

@@ -6,15 +6,32 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/* Body Styling with Background Image */
+/* Body Styling with Fixed Background Image */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('../images/rr3.jpg') no-repeat center center/cover; /* Background image */
+    background: url('../images/rr3.jpg') no-repeat center center fixed; /* FIXED background image */
+    background-size: cover;
+    overflow: hidden; /* Prevent scrolling */
+    position: fixed; /* Keep body fixed */
+    width: 100%;
+    top: 0;
+    left: 0;
 }
 
+/* Wrapper to ensure proper centering and prevent movement */
+.wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+}
 
 /* Main Container */
 .container {
@@ -25,6 +42,7 @@ body {
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 10; /* Ensure it's above background */
 }
 
 /* Left Section (Image) */
@@ -33,7 +51,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background:#146093;
+    background: #146093;
 }
 
 .left-section img {
@@ -52,6 +70,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative; /* Added for stability */
 }
 
 /* Title */
@@ -66,6 +85,7 @@ form {
     display: flex;
     flex-direction: column;
     width: 100%;
+    position: relative; /* Added for stability */
 }
 
 input {
@@ -97,11 +117,24 @@ button {
     font-size: 16px;
     border-radius: 5px;
     font-weight: bold;
-    transition: 0.3s;
+    transition: background-color 0.3s;
+    /* Fixed button behavior */
+    position: relative;
+    outline: none;
+    /* Prevent any shifting */
+    margin: 0;
+    box-sizing: border-box;
 }
 
 button:hover {
     background: #146093;
+}
+
+/* Visual feedback without movement */
+button:active {
+    background: #0d5277;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+    transform: none; /* Remove any transform to prevent shifting */
 }
 
 /* Google Login Button */
@@ -120,6 +153,7 @@ button:hover {
     cursor: pointer;
     font-size: 16px;
     transition: 0.3s;
+    position: relative; /* Added for stability */
 }
 
 .google-btn img {
@@ -131,6 +165,14 @@ button:hover {
     background: #f5f5f5;
     border-color: #146093;
 }
+
+/* Visual feedback without movement */
+.google-btn:active {
+    background: #eaeaea;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1);
+    transform: none; /* Remove any transform to prevent shifting */
+}
+
 .register-link {
     margin-top: 20px;
     text-align: center;
@@ -144,4 +186,97 @@ button:hover {
 
 .register-link a:hover {
     text-decoration: underline;
+}
+
+/* Separator */
+p {
+    color: #999;
+    margin: 15px 0;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+/* Custom SweetAlert2 Styling */
+.swal2-popup {
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    position: fixed; /* Keep the alert in a fixed position */
+    margin: auto; /* Center it properly */
+}
+
+.swal2-container {
+    padding: 0 !important; /* Remove padding that might cause shifting */
+    position: fixed !important; /* Keep the container fixed */
+    overflow-y: auto !important; /* Allow scrolling inside the container if needed */
+}
+
+.swal2-title {
+    color: #1F82B7;
+    font-weight: 600;
+}
+
+.swal2-confirm {
+    background-color: #1F82B7 !important;
+    border-radius: 5px !important;
+    box-shadow: 0px 2px 5px rgba(31, 130, 183, 0.3) !important;
+}
+
+.swal2-confirm:focus {
+    box-shadow: 0 0 0 3px rgba(31, 130, 183, 0.5) !important;
+}
+
+.swal2-cancel {
+    border-radius: 5px !important;
+    color: #666 !important;
+}
+
+.swal2-icon.swal2-success {
+    border-color: #1F82B7 !important;
+    color: #1F82B7 !important;
+}
+
+.swal2-success-circular-line-left,
+.swal2-success-circular-line-right,
+.swal2-success-fix {
+    background-color: white !important;
+}
+
+.swal2-success-ring {
+    border-color: rgba(31, 130, 183, 0.3) !important;
+}
+
+.swal2-success [class^=swal2-success-line] {
+    background-color: #1F82B7 !important;
+}
+
+/* Loading indicator */
+.swal2-loader {
+    border-color: #1F82B7 transparent #1F82B7 transparent !important;
+}
+
+/* Timer progress bar */
+.swal2-timer-progress-bar {
+    background: rgba(31, 130, 183, 0.5) !important;
+}
+
+/* Fix for overlay causing shifts */
+.swal2-backdrop-show {
+    overflow-y: hidden !important;
+}
+
+/* Prevent scrollbar shifts */
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Ensuring SweetAlert2 doesn't affect page layout */
+body.swal2-height-auto {
+    height: 100% !important; /* Override SweetAlert2's height auto */
+}
+
+/* Fix for SweetAlert2 automatically adding styles to body */
+body.swal2-shown {
+    padding-right: 0 !important; /* Prevent padding adjustments */
 }
