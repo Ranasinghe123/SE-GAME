@@ -48,6 +48,71 @@ const safeUpdateElementText = (elementId, text) => {
     }
 };
 
+
+
+
+// Function to create falling letters background
+function createFallingLetters() {
+    const container = document.createElement('div');
+    container.className = 'falling-letters';
+    document.body.appendChild(container);
+    
+    // Characters to use for falling letters
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    
+    // Create initial letters
+    for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+            createLetter(container, characters);
+        }, i * 200);
+    }
+    
+    // Continue creating letters
+    setInterval(() => {
+        createLetter(container, characters);
+    }, 500);
+}
+
+// Function to create a single letter
+function createLetter(container, characters) {
+    // Create letter element
+    const letter = document.createElement('div');
+    letter.className = 'letter';
+    
+    // Random character
+    const randomChar = characters.charAt(Math.floor(Math.random() * characters.length));
+    letter.textContent = randomChar;
+    
+    // Random position
+    const posX = Math.random() * window.innerWidth;
+    letter.style.left = `${posX}px`;
+    
+    // Random size
+    const size = Math.random() * 14 + 12;
+    letter.style.fontSize = `${size}px`;
+    
+    // Random opacity
+    const opacity = Math.random() * 0.3 + 0.1;
+    letter.style.opacity = opacity;
+    
+    // Random animation duration
+    const duration = Math.random() * 5 + 5;
+    letter.style.animationDuration = `${duration}s`;
+    
+    // Add to container
+    container.appendChild(letter);
+    
+    // Remove after animation completes
+    setTimeout(() => {
+        letter.remove();
+    }, duration * 1000);
+}
+
+// Initialize falling letters when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    createFallingLetters();
+});
+
 // Function to get user details and rank
 const fetchUserProfile = async (userId) => {
     try {

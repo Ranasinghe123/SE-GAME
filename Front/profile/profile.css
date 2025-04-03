@@ -13,6 +13,45 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden; /* Hide overflow to prevent scrollbars from falling letters */
+    position: relative;
+  }
+  
+  /* Falling Letters Background */
+  .falling-letters {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  .letter {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 16px;
+    font-weight: bold;
+    animation: fall linear forwards;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+  }
+  
+  @keyframes fall {
+    0% {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
   }
   
   .profile-container {
@@ -24,6 +63,8 @@
     max-width: 500px;
     width: 90%;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
   }
   
   .profile-title {
