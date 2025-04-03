@@ -14,6 +14,45 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Falling Letters Background */
+.falling-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.letter {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 16px;
+  font-weight: bold;
+  user-select: none;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
 }
 
 .profile-container {
@@ -25,6 +64,8 @@ body {
   max-width: 500px;
   width: 90%;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 /* Profile Title */

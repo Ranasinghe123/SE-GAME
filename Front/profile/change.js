@@ -133,6 +133,67 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+
+// Function to create falling letters
+function createFallingLetters() {
+    const fallingBg = document.getElementById('fallingBg');
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const lettersCount = 150;
+    
+    for (let i = 0; i < lettersCount; i++) {
+        const letter = document.createElement('div');
+        letter.className = 'letter';
+        
+        // Random letter
+        letter.innerText = letters.charAt(Math.floor(Math.random() * letters.length));
+        
+        // Random position
+        letter.style.left = Math.random() * 100 + 'vw';
+        
+        // Random size
+        const size = Math.random() * 20 + 10;
+        letter.style.fontSize = size + 'px';
+        
+        // Random opacity
+        letter.style.opacity = Math.random() * 0.5 + 0.1;
+        
+        // Random fall duration
+        const duration = Math.random() * 15 + 5;
+        letter.style.animationDuration = duration + 's';
+        
+        // Random delay
+        const delay = Math.random() * 5;
+        letter.style.animationDelay = delay + 's';
+        
+        // Add to background
+        fallingBg.appendChild(letter);
+    }
+}
+
+// Create falling letters on page load
+window.addEventListener('load', createFallingLetters);
+
+// Profile functions (placeholder)
+function cancelProfile() {
+    // Add your cancel functionality here
+    window.history.back();
+}
+
+// Form submission handler
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Add your form submission logic here
+    
+    // Example success notification
+    Swal.fire({
+        title: 'Success!',
+        text: 'Profile updated successfully',
+        icon: 'success',
+        confirmButtonColor: '#1E78B1'
+    });
+});
+
 // Cancel profile editing with confirmation
 function cancelProfile() {
     Swal.fire({

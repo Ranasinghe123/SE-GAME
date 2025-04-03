@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('../images/rr3.jpg') no-repeat center center fixed; /* FIXED background image */
+    background: url('../images/rr5.png') no-repeat center center fixed; /* FIXED background image */
     background-size: cover;
     overflow: hidden; /* Prevent scrolling */
     position: fixed; /* Keep body fixed */

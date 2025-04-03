@@ -12,7 +12,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: #0d72b8;
+    background:url(../images/rr5.png)no-repeat center center fixed;
+    background-size: cover;
 }
 
 /* Container */

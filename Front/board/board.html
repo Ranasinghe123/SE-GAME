@@ -10,17 +10,20 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
 <body>
+    <div class="falling-bg" id="fallingBg"></div>
+    
     <div class="container">
         <h1>Leader Board</h1>
         <div class="leaderboard">
             <div class="row header">
-                <span>Rank</span>
-                <span>Name</span>
-                <span>Total Score</span>
+                <span class="rank">Rank</span>
+                <span class="name">Name</span>
+                <span class="score">Total Score</span>
             </div>
             <div id="leaderboard-list"></div>
         </div>
     </div>
+    
     <script src="board.js"></script>
 </body>
 </html>
