@@ -42,9 +42,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative;
-    /* Ensure a stable height to prevent movement */
-    min-height: 500px;
+    position: relative; /* Added for better positioning control */
 }
 
 h2 {
@@ -58,11 +56,7 @@ h2 {
 form {
     display: flex;
     flex-direction: column;
-    /* Fix: Set a fixed height for the form container */
-    position: relative;
-    width: 100%;
-    /* This ensures the form always takes the available space */
-    flex-grow: 1;
+    height: auto; /* Ensure form height is based on content */
 }
 
 label {
@@ -78,23 +72,13 @@ input {
     background: transparent;
     color: white;
     border-radius: 5px;
-    /* Fix: Prevent input field height changes */
-    height: 40px;
 }
 
 input::placeholder {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Form validation message container - Fixed height area */
-.validation-message {
-    min-height: 20px; /* Reserve space for validation messages */
-    margin-bottom: 5px;
-    font-size: 12px;
-    color: yellow;
-}
-
-/* Register button - Fixed position */
+/* Register button - Fixed to prevent movement */
 button {
     width: 100%;
     padding: 10px;
@@ -105,12 +89,8 @@ button {
     font-size: 16px;
     border-radius: 5px;
     margin-top: 10px;
-    position: relative;
-    transition: background-color 0.3s;
-    /* Fix: Prevent button from changing layout */
-    height: 45px;
-    /* Fix: Disable transform that could cause layout shifts */
-    transform: none !important;
+    position: relative; /* Added for stable positioning */
+    transition: background-color 0.3s, transform 0.1s;
 }
 
 button:hover {
@@ -118,8 +98,8 @@ button:hover {
 }
 
 button:active {
+    transform: scale(0.98); /* Slight scale instead of position change */
     background: #ccc;
-    /* Remove the scale transform that could cause shifting */
 }
 
 /* Google Signup Button */
@@ -137,11 +117,7 @@ button:active {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s;
-    /* Fix: Set fixed height to prevent layout shifts */
-    height: 45px;
-    /* Fix: Disable transform that could cause layout shifts */
-    transform: none !important;
+    transition: background-color 0.3s, transform 0.1s;
 }
 
 .google-btn img {
@@ -154,8 +130,7 @@ button:active {
 }
 
 .google-btn:active {
-    background: rgba(255, 255, 255, 0.3);
-    /* Remove the scale transform */
+    transform: scale(0.98); /* Slight scale instead of position change */
 }
 
 /* Login text */
@@ -163,8 +138,6 @@ p {
     margin-top: 15px;
     font-size: 14px;
     text-align: center;
-    /* Fix: Ensure text doesn't cause container to shift */
-    padding-bottom: 5px;
 }
 
 a {

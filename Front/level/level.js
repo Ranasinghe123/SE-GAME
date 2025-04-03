@@ -206,5 +206,47 @@ window.levelHelpers = {
     }
 };
 
-// Add event listener for when the page loads
-window.addEventListener('DOMContentLoaded', initLevelSelection);
+// Create falling letters background
+function createFallingLetters() {
+    // Characters that will fall (you can customize these)
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const totalLetters = 100; // Number of letters on screen
+    
+    for (let i = 0; i < totalLetters; i++) {
+        // Create a letter element
+        const letter = document.createElement('div');
+        letter.className = 'falling-letter';
+        
+        // Random character from our set
+        const randomChar = characters.charAt(Math.floor(Math.random() * characters.length));
+        letter.textContent = randomChar;
+        
+        // Random horizontal position
+        const xPos = Math.random() * 100;
+        letter.style.left = `${xPos}%`;
+        
+        // Random size
+        const size = Math.random() * 1 + 0.5;
+        letter.style.fontSize = `${size}rem`;
+        
+        // Random opacity
+        letter.style.opacity = Math.random() * 0.5 + 0.1;
+        
+        // Random animation duration (speed of fall)
+        const duration = Math.random() * 15 + 10;
+        letter.style.animationDuration = `${duration}s`;
+        
+        // Random delay so they don't all start at the same time
+        const delay = Math.random() * 10;
+        letter.style.animationDelay = `${delay}s`;
+        
+        // Add to body
+        document.body.appendChild(letter);
+    }
+}
+
+// Call both functions when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    createFallingLetters();
+    initLevelSelection();
+});

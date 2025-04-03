@@ -10,11 +10,91 @@ function getAuthToken() {
     return null;
 }
 
+// Falling letters background
+function createFallingLetters() {
+    const fallingBg = document.getElementById('falling-bg');
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numLetters = 100; // Number of letters on screen
+    
+    for (let i = 0; i < numLetters; i++) {
+        const letter = document.createElement('div');
+        letter.className = 'letter';
+        
+        // Random letter from alphabet
+        letter.innerText = letters.charAt(Math.floor(Math.random() * letters.length));
+        
+        // Random position and size
+        const size = Math.floor(Math.random() * 30) + 16; // 16-46px
+        const left = Math.random() * 100; // 0-100%
+        const delay = Math.random() * 30; // 0-30s delay
+        const duration = Math.random() * 15 + 10; // 10-25s to fall
+        const opacity = Math.random() * 0.4 + 0.1; // 0.1-0.5 opacity
+        
+        letter.style.fontSize = `${size}px`;
+        letter.style.left = `${left}%`;
+        letter.style.top = `-${size}px`;
+        letter.style.opacity = opacity;
+        letter.style.animation = `fall ${duration}s linear ${delay}s infinite`;
+        
+        fallingBg.appendChild(letter);
+    }
+}
+
+// Add button hover sound effects
+function addButtonSoundEffects() {
+    const buttons = document.querySelectorAll('.btn-animated');
+    
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            // You can add a soft hover sound here if desired
+            button.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        });
+        
+        button.addEventListener('click', () => {
+            // Add click animation
+            button.classList.add('clicked');
+            setTimeout(() => {
+                button.classList.remove('clicked');
+            }, 200);
+        });
+    });
+}
+
+// Button interaction animation
+function setupButtonInteractions() {
+    const container = document.querySelector('.container');
+    const buttons = document.querySelectorAll('.btn-animated');
+    
+    // Add subtle animations when user moves mouse over container
+    container.addEventListener('mousemove', (e) => {
+        const { left, top, width, height } = container.getBoundingClientRect();
+        const x = (e.clientX - left) / width - 0.5;
+        const y = (e.clientY - top) / height - 0.5;
+        
+        buttons.forEach(button => {
+            button.style.transform = `perspective(1000px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) translateZ(10px)`;
+        });
+    });
+    
+    container.addEventListener('mouseleave', () => {
+        buttons.forEach(button => {
+            button.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) translateZ(0)';
+        });
+    });
+}
+
 // Check if user is authenticated
 document.addEventListener("DOMContentLoaded", async function () {
     const userInfo = document.getElementById("user-info");
     const logoutBtn = document.getElementById("logout-btn");
     const authToken = getAuthToken();
+
+    // Create falling letters background
+    createFallingLetters();
+    
+    // Add button interaction effects
+    addButtonSoundEffects();
+    setupButtonInteractions();
 
     if (!authToken) {
         // Show sweet alert for unauthenticated user
@@ -31,6 +111,17 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
         return;
     }
+
+    // Add welcome animation to container
+    const container = document.querySelector('.container');
+    container.style.opacity = '0';
+    container.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+        container.style.transition = 'all 0.8s ease-out';
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+    }, 300);
 
     // Display login status with a welcome toast
     Swal.fire({
@@ -82,6 +173,12 @@ function logout() {
 
 // Function to start the game
 function startGame() {
+    // Button press animation
+    const button = document.querySelector('.button-wrapper button');
+    if (button) {
+        button.classList.add('active');
+    }
+    
     // Show loading animation
     Swal.fire({
         title: 'Loading Game...',

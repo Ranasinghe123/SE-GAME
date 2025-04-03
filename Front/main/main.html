@@ -4,33 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
-    <link rel="stylesheet" href="main.css">
     <!-- Add SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Add SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
+    <!-- Falling letters background div -->
+    <div class="falling-bg" id="falling-bg"></div>
+    
     <div class="container">
         <h1>LETTER TWIST</h1>
         <p id="user-info"></p>
         
-        <div class="button-wrapper">
-            <button onclick="startGame()">Play</button>
-        </div>
-        
-        <div class="button-wrapper">
-            <button onclick="openProfile()">Profile</button>
-        </div>
-        
-        <div class="button-wrapper">
-            <button onclick="openLeaderboard()">Leaderboard</button>
-        </div>
-        
-        <div class="button-wrapper">
-            <button id="logout-btn" onclick="logout()" style="display: none;">Logout</button>
+        <div class="buttons-container">
+            <div class="button-wrapper">
+                <button class="btn-animated" onclick="startGame()">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Play</span>
+                </button>
+            </div>
+            
+            <div class="button-wrapper">
+                <button class="btn-animated" onclick="openProfile()">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </button>
+            </div>
+            
+            <div class="button-wrapper">
+                <button class="btn-animated" onclick="openLeaderboard()">
+                    <i class="fas fa-trophy"></i>
+                    <span>Leaderboard</span>
+                </button>
+            </div>
+            
+            <div class="button-wrapper">
+                <button class="btn-animated" id="logout-btn" onclick="logout()" style="display: none;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
         </div>
     </div>
+
     <script src="main.js"></script>
 </body>
 </html>
