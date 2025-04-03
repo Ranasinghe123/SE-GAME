@@ -83,18 +83,69 @@ function setupButtonInteractions() {
     });
 }
 
+// Function to prevent container movement when buttons are clicked
+function fixButtonContainerInteraction() {
+    const buttons = document.querySelectorAll('.btn-animated');
+    
+    // Add event listeners to prevent the default container hover behavior when buttons are clicked
+    buttons.forEach(button => {
+        button.addEventListener('mousedown', function(e) {
+            // Prevent event propagation up to container
+            e.stopPropagation();
+            
+            // Get the container element
+            const container = document.querySelector('.container');
+            
+            // Temporarily disable the hover effect on the container
+            container.style.transition = 'none';
+            container.style.transform = 'none';
+            
+            // Re-enable the transition after the click is complete
+            setTimeout(() => {
+                container.style.transition = 'all 0.5s ease';
+            }, 300);
+        });
+        
+        // Prevent mouseup events from propagating to the container as well
+        button.addEventListener('mouseup', function(e) {
+            e.stopPropagation();
+        });
+    });
+}
+
+// Function to initialize falling letters (alternative implementation)
+function initFallingLetters() {
+    const bg = document.getElementById('falling-bg');
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    
+    for (let i = 0; i < 50; i++) {
+        const letter = document.createElement('div');
+        letter.className = 'letter';
+        letter.textContent = letters[Math.floor(Math.random() * letters.length)];
+        letter.style.left = `${Math.random() * 100}%`;
+        letter.style.fontSize = `${Math.random() * 20 + 14}px`;
+        letter.style.animationDuration = `${Math.random() * 10 + 5}s`;
+        letter.style.animationDelay = `${Math.random() * 5}s`;
+        letter.style.animation = `fall ${Math.random() * 10 + 10}s linear infinite`;
+        bg.appendChild(letter);
+    }
+}
+
 // Check if user is authenticated
 document.addEventListener("DOMContentLoaded", async function () {
     const userInfo = document.getElementById("user-info");
     const logoutBtn = document.getElementById("logout-btn");
     const authToken = getAuthToken();
 
-    // Create falling letters background
+    // Create falling letters background (using the more detailed implementation)
     createFallingLetters();
     
     // Add button interaction effects
     addButtonSoundEffects();
     setupButtonInteractions();
+    
+    // Fix button container interaction (prevent container from moving when buttons are clicked)
+    fixButtonContainerInteraction();
 
     if (!authToken) {
         // Show sweet alert for unauthenticated user
